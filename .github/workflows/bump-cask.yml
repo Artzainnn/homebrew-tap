@@ -1,0 +1,34 @@
+name: Bump cask to latest release
+
+on:
+  schedule:
+    - cron: "0 6 * * *"   # daily 06:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Sync cask with latest ClaudeUsageBar release
+        run: |
+          set -euo pipefail
+          LATEST=$(curl -s https://api.github.com/repos/Artzainnn/ClaudeUsageBar/releases/latest | jq -r .tag_name)
+          VER=${LATEST#v}
+          CUR=$(grep -oE 'version "[^"]+"' Casks/claudeusagebar.rb | cut -d'"' -f2)
+          if [ -z "$VER" ] || [ "$VER" = "null" ] || [ "$VER" = "$CUR" ]; then
+            echo "Cask up to date ($CUR)"; exit 0
+          fi
+          URL="https://github.com/Artzainnn/ClaudeUsageBar/releases/download/${LATEST}/ClaudeUsageBar-Installer.dmg"
+          curl -fsSL -o /tmp/app.dmg "$URL"
+          SHA=$(sha256sum /tmp/app.dmg | cut -d' ' -f1)
+          sed -i "s/version \"$CUR\"/version \"$VER\"/" Casks/claudeusagebar.rb
+          sed -i "s/sha256 \"[a-f0-9]*\"/sha256 \"$SHA\"/" Casks/claudeusagebar.rb
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "Bump claudeusagebar to $VER"
+          git push
