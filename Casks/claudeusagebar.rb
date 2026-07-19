@@ -1,6 +1,6 @@
 cask "claudeusagebar" do
-  version "1.3.1"
-  sha256 "0aa238d0c25284f175db9e5abc36ca005292925ae773ab1758fb73991d4213b0"
+  version "1.3.2"
+  sha256 "07369d0564cd224dc82909df15650df962122852f3e747713cf645ad9c6a2d63"
 
   url "https://github.com/Artzainnn/ClaudeUsageBar/releases/download/v#{version}/ClaudeUsageBar-Installer.dmg",
       verified: "github.com/Artzainnn/ClaudeUsageBar/"
