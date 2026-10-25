@@ -1,6 +1,6 @@
 cask "codexusagebar" do
-  version "1.1.1"
-  sha256 "49434cc10ab16d38af65f38a22da7b40b30a63caa3d3158a7e4f9c1eb289d3f2"
+  version "1.1.2"
+  sha256 "a6075f2008d7a8b4fda51cc9f385570abbc60abe20c5aa80c7607d05225b90f4"
 
   url "https://github.com/Artzainnn/CodexUsageBar/releases/download/v#{version}/CodexUsageBar-Installer.dmg",
       verified: "github.com/Artzainnn/CodexUsageBar/"
